@@ -1,14 +1,47 @@
 package dev.esdras.contas;
 
 public class ContaInvestimento extends Conta {
-	
-		double taxa;
-		int prazo;
+		
+		private double taxa;
+		private int prazo;
+		public ContaInvestimento() {
+		super();
+	}
+
+
+		public ContaInvestimento(int numero, double saldo, double limite, double taxa, int prazo) {
+		super(numero,saldo);
+		this.taxa = taxa;
+		this.prazo = prazo;
+	}
+
 		
 		
-		boolean sacar(double valor) {
-			if (this.saldo >= valor) {
-				this.saldo = this.saldo - (valor* 0.99);
+		
+		public double getTaxa() {
+			return taxa;
+		}
+
+
+		public void setTaxa(double taxa) {
+			this.taxa = taxa;
+		}
+
+
+		public int getPrazo() {
+			return prazo;
+		}
+
+
+		public void setPrazo(int prazo) {
+			this.prazo = prazo;
+		}
+
+
+		public boolean sacar(double valor) {
+			if (getSaldo() >= valor) {
+				double novoSaldo = getSaldo() - (valor* 0.99);
+				setSaldo(novoSaldo);
 				return true;
 			} else {
 			return false;
@@ -16,11 +49,12 @@ public class ContaInvestimento extends Conta {
 		}
 		
 		
-		boolean depositar (double valor) {
+		public boolean depositar (double valor) {
 			if(valor <=0) {
 				return false;
 			}else {
-			this.saldo = this.saldo + valor;
+			double novoSaldo = getSaldo() + valor;
+			setSaldo(novoSaldo);
 			return true;
 			}
 		}
@@ -30,7 +64,7 @@ public class ContaInvestimento extends Conta {
 				double rendimento = getSaldo() * Math.pow(1 + taxa,prazo) - getSaldo();
 				//setSaldo(getSaldo() + rendimento);
 				setSaldo(getSaldo() + rendimento);
-				return saldo;
+				return getSaldo();
 			}else {
 				System.out.println("Taxa inválida");
 				return -1;
